@@ -1,0 +1,51 @@
+#配置服务器信息
+server:
+  port: 8001
+  #context-path: /study 配置根目录
+
+
+#数据库信息配置
+spring:
+  application:
+    # 对外暴露的微服务应用名称
+    name: microservicecloud-dept
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_cloud01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&verifyServerCertificate=false&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: org.gjt.mm.mysql.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 200
+
+#Mybatis配置
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.jxkj.entity
+  # config-location: classpath:mybatis/mybatis-config.xml
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+    # 开启二级缓存
+    cache-enabled: true
+
+# 将客户端服务注册到eureka服务中
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    # 修改eureka服务的status名称
+    instance-id: dept8001-hystrix
+    # 访问路劲可以显示当前服务的ip地址
+    prefer-ip-address: true
+
+# 跳转页面的信息
+info:
+  app.name: microservicecloud-provider-dept-8001
+  company.name: www.wcx412.com
+  build.artifactId: ${project.artifactId}
+  build.version: ${project.version}
